@@ -11,7 +11,6 @@ export default function Services(){
       <Link href="/services">Web Designing</Link>
       <br />
       <Link href="/services">Web development wih Adonisjs.</Link>
-      <Link href="/services">Back</Link>
     
     </>
 }
