@@ -1,4 +1,5 @@
-import './productdetails.css'
+import '../productdetails.css'
+import Link from "next/link";
 async function getProductDetails(id){
       const res = await fetch(`https://dummyjson.com/products/${id}`);
     if(!res.ok){
@@ -13,7 +14,7 @@ async function getProductDetails(id){
 
 export default async function ProductDetails({params}) {
     const {id}= await params
-    console.log('product id',id);
+    
     const product = await getProductDetails(id)
      console.log('product details',product)
   return (
@@ -22,7 +23,7 @@ export default async function ProductDetails({params}) {
 
         {/* Breadcrumb */}
         <nav className="mb-3 text-sm text-gray-500">
-          Home / Products / <span className="text-gray-900">{product.title}</span>
+          <Link href="/">Home</Link> / <Link href="/products">Products</Link> / <span className="text-gray-900">{product.title}</span>
         </nav>
 
         {/* Product Section */}
@@ -106,7 +107,7 @@ export default async function ProductDetails({params}) {
             <span className="rounded-full bg-green-100 mt-3 px-3 py-1 text-sm font-semibold text-green-700">
               {product.availabilityStatus?"In Stock":"Out of stock"}
             </span>
-            {/* Buttons */}
+            
             <div className="mt-2 flex gap-4">
               <button className="rounded-lg bg-blue-600 px-8 py-3 font-semibold text-white transition hover:bg-blue-700">
                 Add to Cart
@@ -116,8 +117,25 @@ export default async function ProductDetails({params}) {
                 Buy Now
               </button>
             </div>
-
+          {/* products reviews */}
+          <div className="mt-10">
+            <h2 className="text-2xl font-bold text-gray-900">
+              Reviews
+            </h2>
+            <ul className="mt-4 space-y-4">
+              {product.reviews.map((review)=>(
+                 <Link key={review.reviewerName} href={`/products/${product.id}/${review.reviewerName}`} className="text-blue-600 hover:underline">
+                   <li  className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md">
+                      <h3 className=" text-gray-900 font-semibold">{review.reviewerName}</h3>
+                   </li>
+                 </Link>
+               
+              ))}
+            </ul>
+          </div>    
           </div>
+
+        
         </div>
 
        
